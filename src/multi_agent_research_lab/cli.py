@@ -14,7 +14,7 @@ from multi_agent_research_lab.core.state import ResearchState
 from multi_agent_research_lab.evaluation.benchmark import run_benchmark
 from multi_agent_research_lab.evaluation.report import render_markdown_report
 from multi_agent_research_lab.graph.workflow import MultiAgentWorkflow
-from multi_agent_research_lab.observability.logging import configure_logging
+from multi_agent_research_lab.observability.logging import configure_logging, configure_tracing
 from multi_agent_research_lab.services.judge_client import JudgeClient
 from multi_agent_research_lab.services.llm_client import LLMClient
 from multi_agent_research_lab.services.search_client import SearchClient
@@ -60,6 +60,7 @@ console = Console()
 def _init() -> None:
     settings = get_settings()
     configure_logging(settings.log_level)
+    configure_tracing(settings)
 
 
 def _parse_query(query: str) -> ResearchQuery:
