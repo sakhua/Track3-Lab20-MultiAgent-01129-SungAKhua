@@ -115,3 +115,14 @@ Mỗi nhóm trả lời 2 câu:
 
 1. Case nào nên dùng multi-agent? Vì sao?
 2. Case nào không nên dùng multi-agent? Vì sao?
+
+### Trả lời (dựa trên `reports/benchmark_report.md`, query "Research GraphRAG state-of-the-art")
+
+| Run | Latency (s) | Cost (USD) | Citation coverage |
+|---|---:|---:|---:|
+| single-agent baseline | 12.83 | 0.0004 | 0% |
+| multi-agent | 23.46 | 0.0015 | 20% |
+
+**1. Nên dùng multi-agent** khi câu trả lời cần căn cứ trên nguồn cụ thể (báo cáo, tài liệu kỹ thuật cần trích dẫn). Baseline đạt 0% citation coverage — trả lời trôi chảy nhưng không kiểm chứng được. Multi-agent đạt 20% nhờ Researcher truy xuất nguồn trước, Analyst đánh giá độ tin cậy, rồi Writer mới viết — phù hợp khi cần tách bạch "tìm chứng cứ" khỏi "viết" và audit lại qua trace.
+
+**2. Không nên dùng multi-agent** khi task đơn giản, tốc độ/chi phí quan trọng hơn độ sâu. Multi-agent chậm hơn 1.8× và tốn chi phí gần gấp 4× baseline vì gọi LLM 3 lần thay vì 1. Nếu không cần trích dẫn hay kiểm chứng nguồn, baseline là lựa chọn hợp lý hơn — overhead điều phối không tạo giá trị tương xứng.
